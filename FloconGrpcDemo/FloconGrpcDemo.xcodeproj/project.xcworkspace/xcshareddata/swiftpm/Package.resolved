@@ -6,8 +6,8 @@
       "kind": "remoteSourceControl",
       "location": "https://github.com/openflocon/FloconSwift.git",
       "state": {
-        "revision": "4fd74f1daf2577033171d61882436e5ddb16e45f",
-        "version": "0.2.0"
+        "revision": "cc2048a32cb6c3d041c9c7027bdfa187b6eb3c12",
+        "version": "0.3.0"
       }
     },
     {

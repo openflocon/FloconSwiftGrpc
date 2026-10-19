@@ -1,5 +1,5 @@
 import Foundation
-@_spi(FloconExtension) import Flocon
+import Flocon
 
 /// Where an interceptor logs its calls: the Flocon SDK, or a recorder in the tests.
 protocol FloconGrpcCallLogger: Sendable {
@@ -18,22 +18,19 @@ protocol FloconGrpcCallLogger: Sendable {
     )
 }
 
-/// Logs the calls in the Network section of the Flocon desktop app.
+/// Logs the calls in the Network section of the Flocon desktop app, through its network plugin.
 struct FloconSDKCallLogger: FloconGrpcCallLogger {
     private static let networkType = "grpc"
 
-    var isEnabled: Bool { Flocon.isNetworkLoggingEnabled }
+    var isEnabled: Bool { Flocon.shared.networkPlugin != nil }
 
     func logRequest(callId: String, url: String, method: String, startTime: Date, headers: [String: String], body: String?, size: Int64?) {
-        Flocon.logNetworkRequest(
-            callId: callId,
-            networkType: Self.networkType,
-            url: url,
-            method: method,
-            startTime: startTime,
-            headers: headers,
-            body: body,
-            size: size
+        Flocon.shared.networkPlugin?.logRequest(
+            FloconNetworkCallRequest(
+                callId: callId,
+                networkType: Self.networkType,
+                request: FloconNetworkRequest(url: url, method: method, startTime: startTime, headers: headers, body: body, size: size)
+            )
         )
     }
 
@@ -46,17 +43,20 @@ struct FloconSDKCallLogger: FloconGrpcCallLogger {
         size: Int64?,
         error: String?
     ) {
-        Flocon.logNetworkResponse(
-            callId: callId,
-            networkType: Self.networkType,
-            durationMs: durationMs,
-            httpCode: nil,
-            grpcStatus: grpcStatus,
-            contentType: "grpc",
-            body: body,
-            headers: headers,
-            size: size,
-            error: error
+        Flocon.shared.networkPlugin?.logResponse(
+            FloconNetworkCallResponse(
+                callId: callId,
+                networkType: Self.networkType,
+                durationMs: durationMs,
+                response: FloconNetworkResponse(
+                    grpcStatus: grpcStatus,
+                    contentType: "grpc",
+                    body: body,
+                    size: size,
+                    headers: headers,
+                    error: error
+                )
+            )
         )
     }
 }
