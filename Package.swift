@@ -9,9 +9,7 @@ let package = Package(
         .library(name: "FloconGrpc", targets: ["FloconGrpc"]),
     ],
     dependencies: [
-        // The extension API of FloconSwift is not released yet (openflocon/FloconSwift#2):
-        // use from: "0.2.0" once it is merged and tagged.
-        .package(url: "https://github.com/openflocon/FloconSwift.git", branch: "feat/network-extension-spi"),
+        .package(url: "https://github.com/openflocon/FloconSwift.git", from: "0.2.0"),
         .package(url: "https://github.com/grpc/grpc-swift.git", from: "1.26.0"),
         .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.28.1"),
     ],

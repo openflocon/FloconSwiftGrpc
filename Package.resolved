@@ -1,13 +1,13 @@
 {
-  "originHash" : "006ef1a703625bc7afffb07058dc3eea7538a0e082ee51f54ead5fcd531e1b23",
+  "originHash" : "1463cf792f43bc1fa22d69ab3ea470eb59dc0c66422f44eaf3b6776d1fda86bd",
   "pins" : [
     {
       "identity" : "floconswift",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/openflocon/FloconSwift.git",
       "state" : {
-        "branch" : "feat/network-extension-spi",
-        "revision" : "b2230b55d47ede49f377db5b065c90db9d31f92a"
+        "revision" : "4fd74f1daf2577033171d61882436e5ddb16e45f",
+        "version" : "0.2.0"
       }
     },
     {
