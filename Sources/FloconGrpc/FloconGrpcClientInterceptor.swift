@@ -23,7 +23,8 @@ import NIOHPACK
 /// gRPC status. For a streaming call, the first request message and the last response
 /// message are shown.
 ///
-/// The interceptor does nothing before `Flocon.initialize()`.
+/// The interceptor does nothing before the SDK is started, or when the network plugin is not installed
+/// (`startFlocon { $0.install(.network) }`). `Flocon.initialize()` installs every plugin.
 public final class FloconGrpcClientInterceptor<Request, Response>: ClientInterceptor<Request, Response>, @unchecked Sendable {
     private let authority: String
     private let logger: FloconGrpcCallLogger
