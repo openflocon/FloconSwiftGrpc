@@ -32,7 +32,7 @@ targets: [
 ]
 ```
 
-`FloconGrpc` includes FloconSwift: `import FloconGrpc` is enough to start the SDK with `Flocon.initialize()`.
+`FloconGrpc` includes FloconSwift: `import FloconGrpc` is enough to start the SDK, with `Flocon.initialize()` or `startFlocon { ... }`.
 
 ## Usage
 
@@ -53,7 +53,15 @@ let client = Helloworld_GreeterAsyncClient(channel: channel, interceptors: Greet
 
 `authority` is shown as the URL of the calls: an interceptor does not know the channel it runs on.
 
-The interceptor does nothing before `Flocon.initialize()`. For a streaming call, the first request message and the last response message are shown.
+The interceptor does nothing before the SDK is started. If you start it with `startFlocon`, install the network plugin, which the calls are logged through, with a FloconSwift version that has `startFlocon`:
+
+```swift
+startFlocon { flocon in
+    flocon.install(.network)
+}
+```
+
+`Flocon.initialize()` installs every plugin, so it needs nothing more. For a streaming call, the first request message and the last response message are shown.
 
 ## Sample app
 
