@@ -19,13 +19,16 @@ protocol FloconGrpcCallLogger: Sendable {
 }
 
 /// Logs the calls in the Network section of the Flocon desktop app, through its network plugin.
+///
+/// `Flocon.networkPlugin` does nothing when the SDK is not started, so `isEnabled` only avoids
+/// building the logs for nothing.
 struct FloconSDKCallLogger: FloconGrpcCallLogger {
     private static let networkType = "grpc"
 
     var isEnabled: Bool { Flocon.shared.networkPlugin != nil }
 
     func logRequest(callId: String, url: String, method: String, startTime: Date, headers: [String: String], body: String?, size: Int64?) {
-        Flocon.shared.networkPlugin?.logRequest(
+        Flocon.networkPlugin.logRequest(
             FloconNetworkCallRequest(
                 callId: callId,
                 networkType: Self.networkType,
@@ -43,7 +46,7 @@ struct FloconSDKCallLogger: FloconGrpcCallLogger {
         size: Int64?,
         error: String?
     ) {
-        Flocon.shared.networkPlugin?.logResponse(
+        Flocon.networkPlugin.logResponse(
             FloconNetworkCallResponse(
                 callId: callId,
                 networkType: Self.networkType,
