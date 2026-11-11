@@ -14,7 +14,7 @@ Each call shows up with:
 
 - iOS 15+ or macOS 12+
 - grpc-swift 1.26.0 or a later 1.x version
-- FloconSwift 0.3.0 or later (added automatically)
+- FloconSwift 2.0.0 or later (added automatically)
 - The [Flocon desktop app](https://github.com/openflocon/Flocon) running on your Mac
 
 ## Installation
