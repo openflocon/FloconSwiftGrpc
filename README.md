@@ -23,7 +23,7 @@ Add the package with Swift Package Manager, then add the `FloconGrpc` library to
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/openflocon/FloconSwiftGrpc.git", branch: "main"),
+    .package(url: "https://github.com/openflocon/FloconSwiftGrpc.git", from: "2.0.0"),
 ],
 targets: [
     .target(name: "MyApp", dependencies: [
