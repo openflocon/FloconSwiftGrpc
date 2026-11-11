@@ -9,7 +9,7 @@ let package = Package(
         .library(name: "FloconGrpc", targets: ["FloconGrpc"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/openflocon/FloconSwift.git", from: "0.3.0"),
+        .package(url: "https://github.com/openflocon/FloconSwift.git", from: "2.0.0"),
         .package(url: "https://github.com/grpc/grpc-swift.git", from: "1.26.0"),
         .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.28.1"),
     ],

@@ -1,13 +1,13 @@
 {
-  "originHash" : "2139c4d5393e17d84c149034b0c1cafde8e9c9bf5faa29f5effa668f0e0ac89f",
+  "originHash" : "da9b6e5d99a08e567048d7a32cc2e78699cb95e3dff4eb8c7780581968903e47",
   "pins" : [
     {
       "identity" : "floconswift",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/openflocon/FloconSwift.git",
       "state" : {
-        "revision" : "cc2048a32cb6c3d041c9c7027bdfa187b6eb3c12",
-        "version" : "0.3.0"
+        "revision" : "e8ff8906f11dc62955892b87366ed1c3364b8b64",
+        "version" : "2.0.0"
       }
     },
     {
