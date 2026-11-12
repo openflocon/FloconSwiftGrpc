@@ -1,5 +1,7 @@
 # Flocon gRPC for iOS
 
+[![FloconSwiftGrpc release](https://img.shields.io/github/v/release/openflocon/FloconSwiftGrpc?label=FloconSwiftGrpc)](https://github.com/openflocon/FloconSwiftGrpc/releases)
+
 Logs the gRPC calls of your app in the Network section of [Flocon](https://github.com/openflocon/Flocon), the desktop debugger for mobile apps. An add-on for [FloconSwift](https://github.com/openflocon/FloconSwift) and [grpc-swift](https://github.com/grpc/grpc-swift) 1.x.
 
 <!-- screenshot: hero -->
@@ -19,7 +21,7 @@ Add the package with Swift Package Manager (**File > Add Package Dependencies...
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/openflocon/FloconSwiftGrpc.git", from: "2.0.0"),
+    .package(url: "https://github.com/openflocon/FloconSwiftGrpc.git", from: "LAST_VERSION"),
 ],
 targets: [
     .target(name: "MyApp", dependencies: [
