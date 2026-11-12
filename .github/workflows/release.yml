@@ -1,0 +1,57 @@
+name: Release
+
+# Déclenché par FloconSwift (même numéro de version), ou à la main.
+# Aligne la dépendance FloconSwift sur la version, commit sur main, tag + release GitHub (changelog généré).
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version SemVer, sans 'v' (ex: 2.1.0), identique à FloconSwift"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency: release
+
+jobs:
+  release:
+    runs-on: macos-latest
+    env:
+      VERSION: ${{ inputs.version }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate version
+        run: |
+          [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]] || { echo "::error::Version invalide: $VERSION"; exit 1; }
+          [[ "${{ github.ref_name }}" == "main" ]] || { echo "::error::Lancer depuis main"; exit 1; }
+          ! git rev-parse -q --verify "refs/tags/$VERSION" || { echo "::error::Le tag $VERSION existe déjà"; exit 1; }
+
+      - name: Bump FloconSwift dependency
+        run: |
+          sed -i '' -E "s|(openflocon/FloconSwift\.git\", from: \")[^\"]+|\1$VERSION|" Package.swift
+          grep -q "FloconSwift.git\", from: \"$VERSION\"" Package.swift
+
+      - name: Build against the new FloconSwift
+        run: swift build
+
+      - name: Commit bump
+        run: |
+          if ! git diff --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -am "Bump FloconSwift to $VERSION"
+            git push origin HEAD:main
+          fi
+
+      - name: Create tag and GitHub release (generated changelog)
+        run: |
+          flags=()
+          [[ "$VERSION" == *-* ]] && flags+=(--prerelease)
+          gh release create "$VERSION" --target "$(git rev-parse HEAD)" --title "$VERSION" --generate-notes "${flags[@]}"
