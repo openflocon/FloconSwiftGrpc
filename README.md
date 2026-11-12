@@ -4,7 +4,7 @@
 
 Logs the gRPC calls of your app in the Network section of [Flocon](https://github.com/openflocon/Flocon), the desktop debugger for mobile apps. An add-on for [FloconSwift](https://github.com/openflocon/FloconSwift) and [grpc-swift](https://github.com/grpc/grpc-swift) 1.x.
 
-<!-- screenshot: hero -->
+![gRPC calls in Flocon Desktop](https://raw.githubusercontent.com/openflocon/Flocon/main/docs/assets/screenshots/grpc-list.jpg)
 
 Each call shows up with the server and the full method name (`helloworld.Greeter/SayHello`), the request and response messages as JSON, the metadata, the duration, the gRPC status (`OK`, `NOT_FOUND`...) and the error when the call fails.
 
