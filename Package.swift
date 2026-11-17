@@ -17,11 +17,8 @@ let package = Package(
         .default(enabledTraits: ["FloconEnabled"]),
     ],
     dependencies: [
-        .package(
-            url: "https://github.com/openflocon/FloconSwift.git",
-            from: "2.1.0",
-            traits: [.trait(name: "FloconEnabled", condition: .when(traits: ["FloconEnabled"]))]
-        ),
+        // on one line: the Release workflow bumps the version with sed
+        .package(url: "https://github.com/openflocon/FloconSwift.git", from: "2.1.0", traits: [.trait(name: "FloconEnabled", condition: .when(traits: ["FloconEnabled"]))]),
         .package(url: "https://github.com/grpc/grpc-swift.git", from: "1.26.0"),
         .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.28.1"),
     ],
