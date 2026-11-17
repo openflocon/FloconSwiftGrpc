@@ -24,8 +24,10 @@ import NIOHPACK
 /// message are shown.
 ///
 /// The interceptor does nothing before the SDK is started, or when the network plugin is not installed
-/// (`startFlocon { $0.install(.network) }`). `Flocon.initialize()` installs every plugin.
+/// (`startFlocon { $0.install(.network) }`). `Flocon.initialize()` installs every plugin. Without the
+/// `FloconEnabled` package trait, it only forwards the calls.
 public final class FloconGrpcClientInterceptor<Request, Response>: ClientInterceptor<Request, Response>, @unchecked Sendable {
+    #if FloconEnabled
     private let authority: String
     private let logger: FloconGrpcCallLogger
     private let callId = UUID().uuidString
@@ -136,4 +138,12 @@ public final class FloconGrpcClientInterceptor<Request, Response>: ClientInterce
             error: error
         )
     }
+    #else
+    /// Creates an interceptor that forwards the calls without logging them.
+    ///
+    /// - Parameter authority: Ignored without the `FloconEnabled` trait.
+    public init(authority: String) {
+        super.init()
+    }
+    #endif
 }

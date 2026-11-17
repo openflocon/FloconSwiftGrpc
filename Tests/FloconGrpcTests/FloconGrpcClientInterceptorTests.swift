@@ -1,3 +1,4 @@
+#if FloconEnabled
 import Foundation
 import GRPC
 import NIOCore
@@ -147,3 +148,4 @@ struct GreeterInterceptors: Helloworld_GreeterClientInterceptorFactoryProtocol {
         #expect(FloconGrpcFormatter.name(of: .internalError) == "INTERNAL")
     }
 }
+#endif

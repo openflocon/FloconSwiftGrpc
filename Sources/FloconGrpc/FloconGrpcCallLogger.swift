@@ -1,3 +1,4 @@
+#if FloconEnabled
 import Foundation
 import Flocon
 
@@ -63,3 +64,4 @@ struct FloconSDKCallLogger: FloconGrpcCallLogger {
         )
     }
 }
+#endif

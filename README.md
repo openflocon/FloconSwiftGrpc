@@ -10,9 +10,9 @@ Each call shows up with the server and the full method name (`helloworld.Greeter
 
 ## Requirements
 
-- iOS 15+ or macOS 12+, Xcode 16+ (Swift 6.0)
+- iOS 15+ or macOS 12+, Xcode 16.3+ (Swift 6.1)
 - grpc-swift 1.26.0 or a later 1.x version
-- FloconSwift 2.0.0 or later (added automatically)
+- FloconSwift 2.1.0 or later (added automatically)
 - The [Flocon desktop app](https://github.com/openflocon/Flocon) running on your Mac
 
 ## Installation
@@ -31,6 +31,43 @@ targets: [
 ```
 
 `import FloconGrpc` re-exports `Flocon`: it is enough to start the SDK. For the Info.plist keys, the simulator and the physical device, see the [FloconSwift README](https://github.com/openflocon/FloconSwift#quick-start).
+
+### Leaving the SDK out of a build
+
+The `FloconEnabled` package trait, on by default, logs the calls and turns on the trait of the same name in FloconSwift. Turn it off for builds that must not contain the SDK, such as App Store builds: `FloconGrpcClientInterceptor` then only forwards the calls, so your code compiles unchanged, and FloconSwift is compiled without the SDK.
+
+The trait is chosen where you declare the dependency:
+
+```swift
+// On: no `traits`, the default traits are used
+.package(url: "https://github.com/openflocon/FloconSwiftGrpc.git", from: "LAST_VERSION"),
+
+// On, explicitly
+.package(url: "https://github.com/openflocon/FloconSwiftGrpc.git", from: "LAST_VERSION", traits: [.defaults]),
+
+// Off
+.package(url: "https://github.com/openflocon/FloconSwiftGrpc.git", from: "LAST_VERSION", traits: []),
+```
+
+SwiftPM enables the union of the traits asked by every package of the graph: if your app also depends on FloconSwift directly, turn its `FloconEnabled` trait off too (`traits: []`), otherwise the SDK stays in.
+
+Traits are chosen per package, not per build configuration, so decide in your `Package.swift`, for example from an environment variable set by your release script:
+
+```swift
+import Foundation
+
+let excludesFlocon = ProcessInfo.processInfo.environment["EXCLUDE_FLOCON"] == "1"
+
+dependencies: [
+    .package(
+        url: "https://github.com/openflocon/FloconSwiftGrpc.git",
+        from: "LAST_VERSION",
+        traits: excludesFlocon ? [] : [.defaults]
+    ),
+],
+```
+
+See [Leaving the SDK out of a build](https://github.com/openflocon/FloconSwift#leaving-the-sdk-out-of-a-build) in the FloconSwift README.
 
 ## Usage
 

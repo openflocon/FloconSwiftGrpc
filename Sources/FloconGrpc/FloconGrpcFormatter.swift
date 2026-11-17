@@ -1,3 +1,4 @@
+#if FloconEnabled
 import Foundation
 import GRPC
 import NIOHPACK
@@ -53,3 +54,4 @@ enum FloconGrpcFormatter {
         return headers
     }
 }
+#endif
