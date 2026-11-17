@@ -1,4 +1,4 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 6.1
 
 import PackageDescription
 
@@ -8,8 +8,20 @@ let package = Package(
     products: [
         .library(name: "FloconGrpc", targets: ["FloconGrpc"]),
     ],
+    traits: [
+        .trait(
+            name: "FloconEnabled",
+            description: "Logs the gRPC calls, and turns on the FloconEnabled trait of FloconSwift. "
+                + "Without it, the interceptor only forwards the calls, for builds that must not contain the SDK."
+        ),
+        .default(enabledTraits: ["FloconEnabled"]),
+    ],
     dependencies: [
-        .package(url: "https://github.com/openflocon/FloconSwift.git", from: "2.0.0"),
+        .package(
+            url: "https://github.com/openflocon/FloconSwift.git",
+            from: "2.1.0",
+            traits: [.trait(name: "FloconEnabled", condition: .when(traits: ["FloconEnabled"]))]
+        ),
         .package(url: "https://github.com/grpc/grpc-swift.git", from: "1.26.0"),
         .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.28.1"),
     ],
